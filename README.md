@@ -9,4 +9,9 @@ https://github.com/ultraembedded/riscv<br>
 https://www.sifive.com/blog/all-aboard-part-6-booting-a-risc-v-linux-kernel)
 <br>
 https://popovicu.com/posts/bare-metal-programming-risc-v/
+<br>
+
+# How it boots
+<br>
+https://github.com/u-boot/u-boot/blob/master/doc/arch/riscv.rst
 
