@@ -61,3 +61,14 @@ nor_boot=echo "Try to boot from NVMe ..."; \<br>
 
 
 bootmenu_9="recovery from net"=run flash_from_net<br>
+
+// Variable "boot_device" is set during board_late_init()<br>
+autoboot=if test ${boot_device} = nand; then \<br>
+                run nand_boot; \<br>
+        elif test ${boot_device} = nor; then \<br>
+                run nor_boot; \<br>
+        elif test ${boot_device} = mmc; then \<br>
+                run mmc_boot; \<br>
+        fi;<br>
+
+bootcmd=run autoboot; echo "run autoboot"<br>
