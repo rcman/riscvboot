@@ -32,3 +32,32 @@ To load from a file system use:<br>
 
 CONFIG_SPL_FS_FAT=y or CONFIG_SPL_FS_EXT=y<br>
 CONFIG_SPL_FS_LOAD_PAYLOAD_NAME=”<filepath>”<br>
+bootmenu_delay=5<br>
+bootmenu_0="-------- Boot Options --------"=run boot_default<br>
+bootmenu_1="Boot from Nor"=run nor_boot<br>
+bootmenu_2="Boot from Nand"=run nand_boot<br>
+bootmenu_3="Boot from MMC"=run mmc_boot<br>
+bootmenu_4="Autoboot"=run autoboot<br>
+bootmenu_5="Show current Boot Device"=run boot_default<br>
+bootmenu_6="-------- Flash Options --------"=run flash_default<br>
+bootmenu_7="recovery from usb"=run flash_from_usb<br>
+bootmenu_8="recovery from mmc"=run flash_from_mmc<br>
+
+**Example of menu option**
+
+<br>
+// Nor+ssd boot combo<br>
+set_nor_args=setenv bootargs ${bootargs} mtdparts=${mtdparts} root=${nvme_root} rootfstype=ext4<br>
+nor_boot=echo "Try to boot from NVMe ..."; \<br>
+         run commonargs; \<br>
+         run set_nvme_root; \<br>
+         run set_nor_args; \<br>
+         run detect_dtb; \<br>
+         run loadknl; \<br>
+         run loaddtb; \<br>
+         run loadramdisk; \<br>
+         bootm ${kernel_addr_r} ${ramdisk_combo} ${dtb_addr}; \<br>
+         echo "########### boot kernel failed by default config, check your boot config #############"<br>
+
+
+bootmenu_9="recovery from net"=run flash_from_net<br>
