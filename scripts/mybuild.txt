@@ -2,10 +2,6 @@
 
 echo "Making sure I'm in your home directory root"
 cd ~/
-echo "Setting the Exports"
-export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
-export CROSS_COMPILE=riscv65-linux-
-export ARCH=riscv
 
 echo "Making the RISCV directory off your home directory. Check if it exists first."
 
@@ -21,8 +17,11 @@ echo "Let's download buildroot within the riscv directory, extract it. Only sele
 cd ~/riscv/toolchain
 wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
 tar xf buildroot-2024.05.1.tar.gz
-#mv buildroot-2024.05.1 buildroot
-
+mv buildroot-2024.05.1 buildroot
+echo "Setting the Exports"
+export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
+export CROSS_COMPILE=riscv65-linux-
+export ARCH=riscv
 
 U-BOOT section
 ------------------------------------------
