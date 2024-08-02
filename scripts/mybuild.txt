@@ -20,27 +20,29 @@ wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
 tar xf buildroot-2024.05.1.tar.gz
 mv buildroot-2024.05.1 buildroot
 cd buildroot
-PS3='Please enter your choice: '
-options=("1. Build with Glib" "2. Build with MUSL 2" "Option 3" "Quit")
-select opt in "${options[@]}"
+read -n 1 -p "Press g for glib, m for musl or q for quit? (g/m/q) " ans;
 do
-    case $opt in
-        "Option 1")
-            echo "you chose choice 1"
+    case $and in
+            g|G)
+			echo "you chose choice glib"
 			cp config.glib .config
 			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-glib_sdk-buildroot/bin:$PATH
 			export CROSS_COMPILE=riscv65-linux-
 			export ARCH=riscv
             ;;
-        "Option 2")
-            echo "you chose choice 2"
+			m|M)
+            echo "you chose choice musl"
 			cp config.musl .config
 			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
 			export CROSS_COMPILE=riscv65-linux-
 			export ARCH=riscv
             ;;
-        "Option 3")
-            echo "you chose choice $REPLY which is $opt"
+			q|Q)
+            echo "Default is Glib"
+			cp config.glib .config
+			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-glib_sdk-buildroot/bin:$PATH
+			export CROSS_COMPILE=riscv65-linux-
+			export ARCH=riscv
             ;;
         "Quit")
             break
