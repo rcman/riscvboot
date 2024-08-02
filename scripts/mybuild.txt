@@ -42,4 +42,4 @@ wget https://github.com/riscv-software-src/opensbi/archive/refs/heads/master.zip
 unzip master.zip
 mv master opensbi
 cd opensbi
-make PLATFORM=generic FW_PAYLOAD_PATH=../u-boot-2021.01/u-boot.bin
+make PLATFORM=generic FW_PAYLOAD_PATH=../u-boot-master/u-boot.bin
