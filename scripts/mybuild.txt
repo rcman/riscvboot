@@ -20,6 +20,7 @@ wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
 tar xf buildroot-2024.05.1.tar.gz
 mv buildroot-2024.05.1 buildroot
 cd buildroot
+make 
 read -n 1 -p "Press g for glib, m for musl or q for quit? (g/m/q) " ans;
 do
     case $and in
@@ -29,6 +30,9 @@ do
 			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-glib_sdk-buildroot/bin:$PATH
 			export CROSS_COMPILE=riscv65-linux-
 			export ARCH=riscv
+			make -j 32 sdk
+			cp output/images/riscv64-buildroot-linux-glib-sdk-buildroot.tar.gz ~/riscv/buildroot/
+			
             ;;
 			m|M)
             echo "you chose choice musl"
@@ -36,6 +40,9 @@ do
 			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
 			export CROSS_COMPILE=riscv65-linux-
 			export ARCH=riscv
+			make -j 32 sdk
+			cp output/images/riscv64-buildroot-linux-glib-musl-buildroot.tar.gz ~/riscv/buildroot/
+			
             ;;
 			q|Q)
             echo "Default is Glib"
