@@ -14,7 +14,6 @@ mkdir ~/riscv/toolchain
 echo "Let's download buildroot within the riscv directory, extract it. Only select options RISCV for CPU and Toolchain GLIB"
 # download the buildroot command
 # Run Menuconfig and only select RISCV for CPU and the Toolchain you can pick MUSL but GLIB should work
-cd ~/riscv/toolchain
 wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
 tar xf buildroot-2024.05.1.tar.gz
 mv buildroot-2024.05.1 buildroot
