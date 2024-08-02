@@ -14,13 +14,43 @@ mkdir ~/riscv/toolchain
 echo "Let's download buildroot within the riscv directory, extract it. Only select options RISCV for CPU and Toolchain GLIB"
 # download the buildroot command
 # Run Menuconfig and only select RISCV for CPU and the Toolchain you can pick MUSL but GLIB should work
+
+cd ~/riscv/toolchain
 wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
 tar xf buildroot-2024.05.1.tar.gz
 mv buildroot-2024.05.1 buildroot
+cd buildroot
+PS3='Please enter your choice: '
+options=("1. Build with Glib" "2. Build with MUSL 2" "Option 3" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Option 1")
+            echo "you chose choice 1"
+			cp config.glib .config
+			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-glib_sdk-buildroot/bin:$PATH
+			export CROSS_COMPILE=riscv65-linux-
+			export ARCH=riscv
+            ;;
+        "Option 2")
+            echo "you chose choice 2"
+			cp config.musl .config
+			export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
+			export CROSS_COMPILE=riscv65-linux-
+			export ARCH=riscv
+            ;;
+        "Option 3")
+            echo "you chose choice $REPLY which is $opt"
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
+
 echo "Setting the Exports"
-export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
-export CROSS_COMPILE=riscv65-linux-
-export ARCH=riscv
+
 
 U-BOOT section
 ------------------------------------------
