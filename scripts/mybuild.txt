@@ -1,0 +1,45 @@
+#!/bin/bash
+
+echo "Making sure I'm in your home directory root"
+cd ~/
+echo "Setting the Exports"
+export PATH=$HOME/riscv/toolchain/riscv64-buildroot-linux-musl_sdk-buildroot/bin:$PATH
+export CROSS_COMPILE=riscv65-linux-
+export ARCH=riscv
+
+echo "Making the RISCV directory off your home directory. Check if it exists first."
+
+if [ ! -d "riscv" ]; then
+    mkdir ~/riscv
+fi
+cd ~/riscv
+mkdir ~/riscv/toolchain
+
+echo "Let's download buildroot within the riscv directory, extract it. Only select options RISCV for CPU and Toolchain GLIB"
+# download the buildroot command
+# Run Menuconfig and only select RISCV for CPU and the Toolchain you can pick MUSL but GLIB should work
+cd ~/riscv/toolchain
+wget https://buildroot.org/downloads/buildroot-2024.05.1.tar.gz
+tar xf buildroot-2024.05.1.tar.gz
+#mv buildroot-2024.05.1 buildroot
+
+
+U-BOOT section
+------------------------------------------
+cd ~/riscv
+# Download u-boot source code
+# wget https://ftp-denx.de/pub/u-boot/u-boot-2021.01.tar.gz
+wget https://source.denx.de/u-boot/u-boot/-/archive/master/u-boot-master.zip
+unzip u-boot-master/u-boot-master.zip
+cd ~/riscv/u-boot-master
+make openpiton_riscv64_defconfig
+make -j 8
+
+#Open SBI Section
+echo "Download Open SBI, making sure your in the riscv directory"
+cd ~/riscv
+wget https://github.com/riscv-software-src/opensbi/archive/refs/heads/master.zip
+unzip master.zip
+mv master opensbi
+cd opensbi
+make PLATFORM=generic FW_PAYLOAD_PATH=../u-boot-2021.01/u-boot.bin
